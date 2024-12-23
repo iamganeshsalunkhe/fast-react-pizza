@@ -15,7 +15,9 @@ function SearchOrder() {
     return (
         <form onSubmit={handleSubmit}>
 
-       <input placeholder="search order number " value={query} onChange={(e)=>setQuery(e.target.value)}/>
+       <input placeholder="search order number " value={query} onChange={(e)=>setQuery(e.target.value)}
+       className="p-1 rounded"
+       />
         </form>
     )
 }
