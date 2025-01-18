@@ -1,38 +1,17 @@
-/* eslint-disable no-unused-vars */
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../ui/Button';
 import LinkButton from '../../ui/LinkButton';
 import CartItem from './CartItem';
-
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: 'Mediterranean',
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: 'Vegetale',
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: 'Spinach and Mushroom',
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
+import EmptyCart from './EmptyCart';
+import { clearCart, getCart } from './cartSlice';
+import { getUser } from '../user/userSlice';
 
 function Cart() {
-  const username = useSelector(state=>state.user.username);
+  const username = useSelector(getUser);
+  const cart = useSelector(getCart);
+  const dispatch = useDispatch();
 
-  const cart = fakeCart;
-
+  if (!cart.length) return <EmptyCart/>
   return (
     <div className='px-4  py-3 '>
       <LinkButton to="/menu" className='text-sm text-blue-500 hover:text-blue-800'>&larr; Back to menu</LinkButton>
@@ -45,7 +24,7 @@ function Cart() {
       </ul>
       <div className='mt-6 space-x-'>
         <Button  to="/order/new" type='primary'>Order pizzas</Button>
-        <Button type='secondary'>Clear cart</Button> 
+        {<Button type='secondary' onClick={()=>dispatch(clearCart())}>Clear cart</Button> }
       </div>
     </div>
   );
